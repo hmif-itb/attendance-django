@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 class Tenant(models.Model):
     name = models.CharField(max_length=200)
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
-    enabled = models.BooleanField()
+    color_scheme = models.CharField(max_length=100, blank=True)
+    enabled = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
