@@ -1,6 +1,6 @@
 from django.db import transaction
 from rest_framework import exceptions
-from .models import Attendee, Attendance
+from .models import Student, Attendance
 from event.models import Event
 
 class AttendanceService:
@@ -11,17 +11,9 @@ class AttendanceService:
         if (not event.checkin_open):
             raise exceptions.APIException(detail='Check in closed')
 
-        try:
-            attendee = Attendee.objects.get(nim__exact = attendee_nim)
-        except Attendee.DoesNotExist:
-            attendee = Attendee.objects.create(
-                nim = attendee_nim,
-                name = attendee_nim
-            )
-
         attendance = Attendance.objects.create(
             event = event,
-            attendee = attendee
+            attendee = attendee_nim
         )
 
         return attendance
